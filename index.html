@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Table</title>
+
+</head>
+<body>
+	<style>
+		#table{
+			text-align: center;
+			margin: 0 auto;
+			width: 60%;
+			font-size: 18px;
+			border-collapse: collapse;
+
+		}
+		#table .title,
+		#table td:first-child{
+			font-weight: bold;
+			font-size: 24px;
+			background-color: #e6f2f0;
+		}
+		#table td{
+			border: 1px solid black;
+		}
+		#table img{
+			width: 60%;
+		}
+	</style>
+	
+	 <table id="table">
+	 	<tr class="title">
+	 		<td>№</td>
+	 		<td>Name</td>
+	 		<td>City</td>
+	 		<td>E-mail</td>
+	 		<td>Img</td>
+	 	</tr>
+	 </table>
+
+	<script>
+		(function loadTable() {
+
+		      var xhr = new XMLHttpRequest();
+		      xhr.open('GET', 'https://randomuser.me/api?results=10', true);
+		      xhr.send();
+
+		      xhr.onreadystatechange = function() {
+		        if (xhr.readyState != 4) return;
+		        if (xhr.status != 200) {
+		          alert(xhr.status + ': ' + xhr.statusText);
+		        } else {
+		          try {
+		            var person = JSON.parse(xhr.responseText);
+		          } catch (e) {
+		            alert("Invalid answer " + e.message);
+		          }
+		          showPersons(person);
+		        }
+
+		      }
+		      
+		    })();
+
+		    function showPersons(person) {
+		    	var n = 1;
+		    	for(var i in  person.results){
+		    		  var tr = document.createElement('tr');
+		    		  
+		    		  tr.innerHTML = '<td>' + n++ + '</td>' +
+		    		    '<td>' + person.results[i].name.first + '</td>' +
+		    		    '<td>' + person.results[i].location.city+ '</td>' +
+		    		    '<td>' + person.results[i].email + '</td>' +
+		    		    '<td><img src="' + person.results[i].picture.large + '"></td>';
+		    		  table.appendChild(tr);
+		    		}
+		    	}
+
+	</script>
+</body>
+</html>
